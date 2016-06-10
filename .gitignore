@@ -1,0 +1,109 @@
+# ignore all
+# check another .ignore file in addons folder
+
+# Xcode Project
+xcuserdata/
+*.entitlements
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+.xcscmblueprint
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+#OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+*~
+.svn/
+*.wav
+*.app/
+
+_render/
+assets/
+
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# xml
+*.*.bak
+
+#emacs
+*.*~
+
+#movie file
+*.mov
+*.avi
+*.mpeg
+
+
+#image file
+*.png
+*.jpg
+*.jpeg
+*.tiff
+*.tif
+*.gif
+
+#3d
+*.abc
+*.obj
+*.dae
+
+#gui setting
+_settings.xml
+#.gitignore#
+
+#binary file
+*.bin
+*.dsYM
+#max
+*.maxpat
+
+#icon
+*.icns
+
+*.psd
+*.eps
+*.svg
+*.pdf
+*.ai
+
+*.aif
+*.aiff
+*.wav
+*.mp3
+*.raw
+*.pkf
+
+*.zip
+*.gml
+
+*.xcscmblueprint

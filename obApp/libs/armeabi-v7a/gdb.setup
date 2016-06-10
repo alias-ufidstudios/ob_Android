@@ -1,0 +1,7 @@
+set solib-search-path /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/obApp/obj/local/armeabi-v7a:/Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/obApp/libs/armeabi-v7a
+set sysroot /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/platforms/android-19/arch-x86/
+directory /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/platforms/android-19/arch-arm/usr/include
+directory /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/obApp/src
+directory /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/sources/cxx-stl/system
+directory /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/obApp/libs/armeabi-v7a
+
