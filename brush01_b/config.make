@@ -144,3 +144,5 @@
 #PROJECT_CXX = /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/libs/openFrameworksCompiled/project/ccache-clang++.sh
 
 #export USE_CCACHE=1
+ABIS_TO_COMPILE_RELEASE = armv7
+ABIS_TO_COMPILE_DEBUG = armv7
