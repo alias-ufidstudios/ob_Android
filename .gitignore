@@ -117,7 +117,7 @@ com_crashlytics_export_strings.xml
 **/gradlew.bat
 **/jni/
 **/local.properties
-
+**/obj/
 **/.gradle/
 **/.signing/
 **/.idea/
