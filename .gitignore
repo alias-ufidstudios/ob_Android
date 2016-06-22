@@ -110,17 +110,17 @@ _settings.xml
 
 com_crashlytics_export_strings.xml
 
-**/*.iml
-**/build/
-**/gradle/
-**/gradlew
-**/gradlew.bat
-**/jni/
-**/local.properties
-**/obj/
-**/.gradle/
-**/.signing/
-**/.idea/
+*.iml
+build/
+gradle/
+gradlew
+gradlew.bat
+jni/
+local.properties
+obj/
+.gradle/
+.signing/
+.idea/
 
 
 # OS-specific files
