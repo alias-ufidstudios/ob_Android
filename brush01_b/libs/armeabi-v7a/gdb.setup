@@ -1,5 +1,5 @@
 set solib-search-path /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/obj/local/armeabi-v7a:/Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/libs/armeabi-v7a
-set sysroot /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/platforms/android-19/arch-x86/
+set sysroot /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/platforms/android-19/arch-arm/
 directory /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/platforms/android-19/arch-arm/usr/include
 directory /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src
 directory /Users/matobahiroshi/Desktop/Android/android-ndk_r11c/sources/cxx-stl/system

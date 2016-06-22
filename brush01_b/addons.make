@@ -1,2 +1,3 @@
 ofxAndroid
 ofxAccelerometer
+ofxOpenCv
