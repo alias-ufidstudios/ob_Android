@@ -577,7 +577,8 @@ obj/android/armv7/Release/src/ofApp.o: \
  /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/addons/ofxAndroid/src/ofAppAndroidWindow.h \
  /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/addons/ofxAndroid/src/ofxAndroidApp.h \
  /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/addons/ofxAndroid/src/ofxAndroidUtils.h \
- /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/obGeoDrawer.hpp
+ /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/obGeoDrawer.hpp \
+ /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/obStats.hpp
 
 /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/ofApp.h:
 
@@ -1734,3 +1735,5 @@ obj/android/armv7/Release/src/ofApp.o: \
 /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/addons/ofxAndroid/src/ofxAndroidUtils.h:
 
 /Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/obGeoDrawer.hpp:
+
+/Users/matobahiroshi/Desktop/Android/of_v0.9.3_android/apps/dev/brush01_b/src/obStats.hpp:
