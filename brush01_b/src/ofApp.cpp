@@ -2,6 +2,15 @@
 #include "obGeoDrawer.hpp"
 #include "obStats.hpp"
 
+
+/*
+
+   NOTICE
+
+   + sound_stream.getBufferSize() makes app crash.
+
+*/
+
 //
 //  if n<0 -1
 //  if n=0  0
