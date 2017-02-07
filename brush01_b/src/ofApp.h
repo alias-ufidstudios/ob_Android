@@ -9,10 +9,10 @@
 
 using namespace std::chrono;
 
-class ofApp : public ofBaseApp{
-	
+class ofApp : public ofxAndroidApp{
+
 	public:
-		
+
 		void setup();
 		void update();
 		void draw();
@@ -37,7 +37,7 @@ class ofApp : public ofBaseApp{
 		void okPressed();
 		void cancelPressed();
 
-        void audioIn(float * input, int bufferSize, int nChannels) override;
+		void audioReceived(float * input,int bufferSize,int nChannels);
 
         void audioPreProcess();
         void videoPreProcess();
@@ -65,11 +65,13 @@ class ofApp : public ofBaseApp{
         ofVec2f         indicator;   // relative pix pos(dist from start_point)
 
         // sound
+        int             bufferSize;
         int             currentSamplePos;
         int             prevSamplePos;
         float *         audioIn_raw;
         vector<float>   audioIn_data;
         ofSoundStream   sound_stream;
+
 
 #ifdef USE_GRABBER
         // video

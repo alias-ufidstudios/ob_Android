@@ -28,13 +28,13 @@ void ofApp::setup(){
     bLog = true;
 
     // sound
-    int bufferSize = 1920;
     int nCh = 1;
     int sampleRate = 48000;
+    int bufferSizeTry = bufferSize = 2048;
     currentSamplePos = 0;
     prevSamplePos = 0;
 
-    sound_stream.setup(this, 0, nCh, sampleRate, bufferSize, 4);
+    sound_stream.setup(this, 0, nCh, sampleRate, bufferSizeTry, 4);
 
     // visual
     int w = ofGetWindowWidth();
@@ -71,7 +71,9 @@ void ofApp::setup(){
 #endif
 }
 
-void ofApp::audioIn(float * input, int bufferSize, int nCh){
+void ofApp::audioReceived(float * input,int _bufferSize,int nCh){
+
+    bufferSize = _bufferSize;
     if( bStart ){
         audioIn_raw = input;
         currentSamplePos += bufferSize;
@@ -85,7 +87,6 @@ void ofApp::audioPreProcess(){
 
     // copy
     {
-        int bufferSize = sound_stream.getBufferSize();
         int nCh = sound_stream.getNumInputChannels();
         audioIn_data.clear();
         audioIn_data.insert( audioIn_data.begin(), audioIn_raw, audioIn_raw+bufferSize*nCh );
@@ -242,7 +243,7 @@ void ofApp::draw_wave(){
         s.indicator = indicator;
         s.data = &audioIn_data;
         s.track_len = track_len;
-        s.buffer_size = sound_stream.getBufferSize();
+        s.buffer_size = bufferSize;
         s.xrate = track_len/s.buffer_size;
         s.global_amp = canvas.height/2 * 0.8;
 
@@ -294,7 +295,6 @@ void ofApp::draw_wave(){
 void ofApp::draw_audioStats(){
 
     if(bStart && ob::audioStats.min!=numeric_limits<float>::max()){
-        const int bufferSize = sound_stream.getBufferSize();
         //const float xrate = track_len/bufferSize;
         const float amp = ob::dset.global_amp;
 
@@ -373,7 +373,7 @@ void ofApp::draw_info(){
     ofSetColor(0);
     ofDrawBitmapString("fps        " + ofToString(ofGetFrameRate()), x, y);
     ofDrawBitmapString("nChannels  " + ofToString(sound_stream.getNumInputChannels() ), x+=os, y);
-    ofDrawBitmapString("bufferSize " + ofToString(sound_stream.getBufferSize()), x+=os, y);
+    ofDrawBitmapString("bufferSize " + ofToString(bufferSize), x+=os, y);
     ofDrawBitmapString("sampleRate " + ofToString(sound_stream.getSampleRate()), x+=os, y);
     ofDrawBitmapString("track len  " + ofToString((int)track_len), x+=os, y);
 
