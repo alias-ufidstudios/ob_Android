@@ -131,3 +131,5 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+!ic_launcher.png
