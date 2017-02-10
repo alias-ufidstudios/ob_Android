@@ -133,3 +133,18 @@ ehthumbs.db
 Thumbs.db
 
 !ic_launcher.png
+
+
+# Android
+android/*/test link
+android/*/gen
+android/*/res/raw
+libOFAndroidApp*.so
+gdbserver
+gdb.setup
+libneondetection.so
+Application.mk
+Android.mk
+!/android/*/.cproject
+!/android/*/.project
+!/android/*/.settings
