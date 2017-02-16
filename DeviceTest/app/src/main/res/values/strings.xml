@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DeviceTest</string>
+    <string name="obt_sdk_app_id">08014e17-5378-421a-aac5-68ef6cc090c5</string>
+    <string name="obt_sdk_app_key">709af04f-03f5-4ab6-bc71-5bdb119f306e</string>
+</resources>
