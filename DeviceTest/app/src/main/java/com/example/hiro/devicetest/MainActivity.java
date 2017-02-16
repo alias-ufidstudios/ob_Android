@@ -2,6 +2,7 @@ package com.example.hiro.devicetest;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,7 @@ import android.os.Bundle;
 
 import com.oralb.sdk.*;
 
-public class MainActivity extends AppCompatActivity  implements OBTUserAuthorizationListener {
-
-    private OBTBrushAdapter adapter;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +28,10 @@ public class MainActivity extends AppCompatActivity  implements OBTUserAuthoriza
 
         setContentView(R.layout.activity_main);
 
-        boolean sdkAuth = OBTSDK.isSdkAuthorized();
-        boolean bluethooth = OBTSDK.isBluetoothAvailableAndEnabled();
-        boolean BTLE = OBTSDK.isBluetoothLowEnergySupported();
-        //OBTSDK.startScanning();
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
 
-        adapter = new OBTBrushAdapter();
 
+        
     }
-
-    @Override
-    public void onUserAuthorizationSuccess(){
-        System.out.print("Auth OK");
-    }
-
-    @Override
-    public void onUserAuthorizationFailed(int var1){
-        System.out.print("Auth Fail");
-    }
-
-
 }
