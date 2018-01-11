@@ -37,6 +37,15 @@ model {
         }
     }
 
+    android.signingConfigs {
+        create("release") {
+            storeFile file('brush_03.jks')
+            storePassword '111111'
+            keyAlias 'key0'
+            keyPassword '111111'
+        }
+    }
+
     android.ndk {
         moduleName = ofAppModuleName()
         toolchain  = buildToolchain()
@@ -104,6 +113,7 @@ model {
     android.buildTypes {
         release {
             minifyEnabled = false
+            signingConfig = $("android.signingConfigs.release")
         }
     }
 
