@@ -1,4 +1,4 @@
-#define USE_DUMMY_DATA
+//#define USE_DUMMY_DATA
 
 #include "ofApp.h"
 
@@ -92,6 +92,10 @@ void ofApp::urlResponse(ofHttpResponse & response){
             viz.composePlotData(data);
         }
     }
+}
+
+void ofApp::onResume(){
+    ofLogNotice("onResume") << "yay";
 }
 
 void ofApp::exit() {

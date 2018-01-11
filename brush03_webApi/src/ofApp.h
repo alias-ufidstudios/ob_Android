@@ -20,6 +20,8 @@ public:
     void exit();
     void urlResponse(ofHttpResponse & response);
     void makeVisual();
+    void onResume();
+
     static ofApp & get(){
         static ofApp app;
         return app;
