@@ -2,8 +2,8 @@
 
 #include "ofApp.h"
 
-void ofApp::setup(){
- 
+void ofApp::setup() {
+
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetCircleResolution(360);
     ofLogNotice("setup") << "width : " << ofGetWidth() << ", height : " << ofGetHeight();
@@ -11,11 +11,16 @@ void ofApp::setup(){
 #ifdef USE_DUMMY_DATA
     ofxJSONElement json = handler.getDataFromDummyFile("sessionExample.json");
     BrushData::createData(json, data);
-    viz.composePlotData(data);
+    makeVisual();
 #else
     ofRegisterURLNotification(this);
     handler.getDataFromServer();
 #endif
+}
+
+void ofApp::makeVisual(){
+
+    viz.composePlotData(data);
 
     float minRad, maxRad;
     minRad = 0;

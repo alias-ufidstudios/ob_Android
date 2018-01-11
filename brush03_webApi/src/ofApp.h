@@ -19,7 +19,7 @@ public:
     void draw();
     void exit();
     void urlResponse(ofHttpResponse & response);
-    
+    void makeVisual();
     static ofApp & get(){
         static ofApp app;
         return app;

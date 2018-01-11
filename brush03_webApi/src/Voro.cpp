@@ -29,7 +29,7 @@ void Voro::create(){
 }
 
 void Voro::draw(){
-    if( 1 ){
+    if( vPs.size() > 1 ){
         voronoi_diagram<double>::const_cell_iterator it = vD.cells().begin();
         for (int i=0; it!= vD.cells().end(); ++it, i++) {
             
