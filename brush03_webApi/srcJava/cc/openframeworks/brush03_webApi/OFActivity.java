@@ -12,10 +12,6 @@ public class OFActivity extends cc.openframeworks.OFActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
     }
 
     @Override
@@ -49,5 +45,22 @@ public class OFActivity extends cc.openframeworks.OFActivity{
         //  you can add or remove menu options from here
         return  super.onPrepareOptionsMenu(menu);
     }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // if redirect from website, then get Url here and call c++
+
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        redirectFromWebAuth(appLinkAction);
+    }
+
+    public native static void redirectFromWebAuth(String userToken);
+
 }
 

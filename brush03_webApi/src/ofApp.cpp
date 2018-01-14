@@ -1,6 +1,17 @@
 //#define USE_DUMMY_DATA
 
 #include "ofApp.h"
+#include <jni.h>
+
+extern "C" {
+JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirectFromWebAuth
+        (JNIEnv *env, jobject obj, jstring token) {
+
+    jboolean isCopy = false;
+    const char *c = env->GetStringUTFChars(token, &isCopy);
+    ofLogNotice("redirectFromWebAuth : ") << c;
+}
+}
 
 void ofApp::setup() {
 
