@@ -1,5 +1,6 @@
 #include "BrushDataHandler.h"
 #include "ofMain.h"
+#include "ofxAndroidUtils.h"
 
 void BrushDataHandler::getDataFromServer(){
     ofLogNotice("BrushDataHandler") << "Loading from server";
@@ -102,7 +103,8 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
         }else if(name == "auth"){
             authUrl = json["url"].asString();
             ofLogNotice("BrushDataHandler") << "got authURL " << authUrl;
-            ofLaunchBrowser(authUrl);
+            //ofxAndroidPauseApp();
+            ofLaunchBrowser(authUrl); // -> destroy
         }else if(name == "session data"){
             //createData(json);
         }

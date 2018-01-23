@@ -10,6 +10,8 @@ JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirec
     jboolean isCopy = false;
     const char *c = env->GetStringUTFChars(token, &isCopy);
     ofLogNotice("redirectFromWebAuth : ") << c;
+
+    ofApp::get().userToken = string(c);
 }
 }
 
@@ -24,8 +26,10 @@ void ofApp::setup() {
     BrushData::createData(json, data);
     makeVisual();
 #else
-    ofRegisterURLNotification(this);
-    handler.getDataFromServer();
+    if(userToken=="aaa") {
+        ofRegisterURLNotification(this);
+        handler.getDataFromServer();
+    }
 #endif
 }
 
@@ -63,30 +67,33 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofBackground(255);
-    
-    float x = ofGetWidth()/2;
-    float y = ofGetHeight()/2;
-    float rad = ofGetWidth()/2;
 
-    ofPushMatrix();{
-        ofTranslate(x, y);
-        
-        ofFill();
-        //viz.draw_hour   (rad * 0.4, data, num);
-        viz.draw_day    (rad * 0.6, data, num);
-        viz.draw_week   (rad * 0.7, data, num);
-        viz.draw_month  (rad * 0.8, data, num);
-        viz.draw_year   (rad * 0.9, data, num);
-        
-        voro.draw();
-        np.draw();
-        
-        ofSetColor(150,200);
-        ofSetLineWidth(1);
-        ofNoFill();
-        ofDrawCircle(0, 0, rad*0.4);
+    ofSetColor(0);
+    ofDrawBitmapString(userToken, 50, 50);
 
-    }ofPopMatrix();
+//    float x = ofGetWidth()/2;
+//    float y = ofGetHeight()/2;
+//    float rad = ofGetWidth()/2;
+//
+//    ofPushMatrix();{
+//        ofTranslate(x, y);
+//
+//        ofFill();
+//        //viz.draw_hour   (rad * 0.4, data, num);
+//        viz.draw_day    (rad * 0.6, data, num);
+//        viz.draw_week   (rad * 0.7, data, num);
+//        viz.draw_month  (rad * 0.8, data, num);
+//        viz.draw_year   (rad * 0.9, data, num);
+//
+//        voro.draw();
+//        np.draw();
+//
+//        ofSetColor(150,200);
+//        ofSetLineWidth(1);
+//        ofNoFill();
+//        ofDrawCircle(0, 0, rad*0.4);
+//
+//    }ofPopMatrix();
 }
 
 void ofApp::urlResponse(ofHttpResponse & response){
@@ -111,5 +118,5 @@ void ofApp::onResume(){
 
 void ofApp::exit() {
     //ofxiOSAlerts.removeListener(this);
-    ofUnregisterURLNotification(this);
+    //ofUnregisterURLNotification(this);
 }

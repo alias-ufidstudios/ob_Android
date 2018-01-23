@@ -12,7 +12,7 @@ class ofApp : public ofxAndroidApp{ //ofxiOSApp{
     
 public:
      ofApp(){ cout << "construct ofApp" << endl; }
-    ~ofApp(){ cout << "destruct  ofApp" << endl; }
+    //~ofApp(){ cout << "destruct  ofApp" << endl; }
 
     void setup();
     void update();
@@ -35,6 +35,8 @@ public:
     Np np;
     
     int num = 0;
+
+    string userToken = "aaa";
 };
 
 
