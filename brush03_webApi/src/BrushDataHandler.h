@@ -22,7 +22,7 @@ public:
     void createData(ofxJSONElement & elem, vector<BrushData> & data);
     
     void urlResponse(ofHttpResponse & response);    // oF callback
-    void launchedWithURL(string url);               // iOS callback
+    void requestSessionData(string url);
     
     local_date_time get_ldt(string ss);
 

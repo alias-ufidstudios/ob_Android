@@ -2,4 +2,11 @@
    <RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
        	<RelativeLayout android:id="@+id/of_gl_surface_container" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
     	<!-- add here other views' layouts -->
-    </RelativeLayout>
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</RelativeLayout>

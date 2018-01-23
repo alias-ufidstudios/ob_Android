@@ -9,9 +9,9 @@ JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirec
 
     jboolean isCopy = false;
     const char *c = env->GetStringUTFChars(token, &isCopy);
-    ofLogNotice("redirectFromWebAuth : ") << c;
-
-    ofApp::get().userToken = string(c);
+    string ut = ofApp::get().userToken = string(c);
+    ofLogNotice("redirectFromWebAuth : ") << ut;
+    ofApp::get().handler.requestSessionData(ut);
 }
 }
 
@@ -71,29 +71,29 @@ void ofApp::draw(){
     ofSetColor(0);
     ofDrawBitmapString(userToken, 50, 50);
 
-//    float x = ofGetWidth()/2;
-//    float y = ofGetHeight()/2;
-//    float rad = ofGetWidth()/2;
-//
-//    ofPushMatrix();{
-//        ofTranslate(x, y);
-//
-//        ofFill();
-//        //viz.draw_hour   (rad * 0.4, data, num);
-//        viz.draw_day    (rad * 0.6, data, num);
-//        viz.draw_week   (rad * 0.7, data, num);
-//        viz.draw_month  (rad * 0.8, data, num);
-//        viz.draw_year   (rad * 0.9, data, num);
-//
-//        voro.draw();
-//        np.draw();
-//
-//        ofSetColor(150,200);
-//        ofSetLineWidth(1);
-//        ofNoFill();
-//        ofDrawCircle(0, 0, rad*0.4);
-//
-//    }ofPopMatrix();
+    float x = ofGetWidth()/2;
+    float y = ofGetHeight()/2;
+    float rad = ofGetWidth()/2;
+
+    ofPushMatrix();{
+        ofTranslate(x, y);
+
+        ofFill();
+        //viz.draw_hour   (rad * 0.4, data, num);
+        viz.draw_day    (rad * 0.6, data, num);
+        viz.draw_week   (rad * 0.7, data, num);
+        viz.draw_month  (rad * 0.8, data, num);
+        viz.draw_year   (rad * 0.9, data, num);
+
+        voro.draw();
+        np.draw();
+
+        ofSetColor(150,200);
+        ofSetLineWidth(1);
+        ofNoFill();
+        ofDrawCircle(0, 0, rad*0.4);
+
+    }ofPopMatrix();
 }
 
 void ofApp::urlResponse(ofHttpResponse & response){
@@ -107,7 +107,7 @@ void ofApp::urlResponse(ofHttpResponse & response){
         
         if(name == "session data"){
             BrushData::createData(json, data);
-            viz.composePlotData(data);
+            makeVisual();
         }
     }
 }
@@ -117,6 +117,5 @@ void ofApp::onResume(){
 }
 
 void ofApp::exit() {
-    //ofxiOSAlerts.removeListener(this);
-    //ofUnregisterURLNotification(this);
+    ofUnregisterURLNotification(this);
 }

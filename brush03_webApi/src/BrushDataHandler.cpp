@@ -1,6 +1,7 @@
 #include "BrushDataHandler.h"
 #include "ofMain.h"
 #include "ofxAndroidUtils.h"
+#include "ofApp.h"
 
 void BrushDataHandler::getDataFromServer(){
     ofLogNotice("BrushDataHandler") << "Loading from server";
@@ -48,14 +49,15 @@ void BrushDataHandler::requestAuthUrl(string bearer){
 }
 
 
-void BrushDataHandler::launchedWithURL(string url){
-    cout << "launchedWithURL : " << url << endl;
-    
+void BrushDataHandler::requestSessionData(string url){
+
     // request session data
     // example https://api.developer.oralb.com/v1/sessions?from=2015-02-20T12:40:45.327-07:00&to=
-    
-    userToken = url.erase(0, 9); // remove obtest://userToken
-    cout << "userToken : " << userToken << endl;
+
+    ofLogNotice("requestSessionData") << url;
+    // TODO better string operation
+    userToken = url.erase(0, 43); // remove http://dominofactory.net/obTest?userToken=
+    ofLogNotice("userToken") << userToken;
     
     ofHttpRequest req;
     req.url = baseurl + "/sessions?from=2015-02-20T12:40:45.327-07:00";
@@ -104,12 +106,14 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
             authUrl = json["url"].asString();
             ofLogNotice("BrushDataHandler") << "got authURL " << authUrl;
             //ofxAndroidPauseApp();
-            ofLaunchBrowser(authUrl); // -> destroy
+            //ofLaunchBrowser(authUrl); // -> destroy
+            ofApp::get().webView.showWebView(authUrl);
         }else if(name == "session data"){
             //createData(json);
+            ofLogNotice("session data") << "arrived";
         }
     }else{
-        cout << status << " " << response.error << " for request " << name << endl;
+        ofLogError("url response") << status << " " << response.error << " for request " << name;
         if(status!=-1){}
     }
 }

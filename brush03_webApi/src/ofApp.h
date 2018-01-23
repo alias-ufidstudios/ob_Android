@@ -7,6 +7,7 @@
 #include "BrushData.h"
 #include "Voro.h"
 #include "Np.h"
+#include "ofxAndroidWebView.h"
 
 class ofApp : public ofxAndroidApp{ //ofxiOSApp{
     
@@ -37,6 +38,8 @@ public:
     int num = 0;
 
     string userToken = "aaa";
+
+    ofxAndroidWebView webView;
 };
 
 
