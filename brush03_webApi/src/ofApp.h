@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "ofxiOS.h"
 #include "ofxAndroidApp.h"
 #include "CircularVisualizer.h"
 #include "BrushDataHandler.h"
@@ -9,7 +8,7 @@
 #include "Np.h"
 #include "ofxAndroidWebView.h"
 
-class ofApp : public ofxAndroidApp{ //ofxiOSApp{
+class ofApp : public ofxAndroidApp{
     
 public:
      ofApp(){ cout << "construct ofApp" << endl; }
@@ -19,7 +18,6 @@ public:
     void update();
     void draw();
     void exit();
-    void urlResponse(ofHttpResponse & response);
     void makeVisual();
     void onResume();
 

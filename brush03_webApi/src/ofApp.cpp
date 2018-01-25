@@ -1,19 +1,6 @@
 //#define USE_DUMMY_DATA
 
 #include "ofApp.h"
-#include <jni.h>
-
-extern "C" {
-JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirectFromWebAuth
-        (JNIEnv *env, jobject obj, jstring token) {
-
-    jboolean isCopy = false;
-    const char *c = env->GetStringUTFChars(token, &isCopy);
-    string ut = ofApp::get().userToken = string(c);
-    ofLogNotice("redirectFromWebAuth : ") << ut;
-    ofApp::get().handler.requestSessionData(ut);
-}
-}
 
 void ofApp::setup() {
 
@@ -27,7 +14,6 @@ void ofApp::setup() {
     makeVisual();
 #else
     if(userToken=="aaa") {
-        ofRegisterURLNotification(this);
         handler.getDataFromServer();
     }
 #endif
@@ -96,26 +82,9 @@ void ofApp::draw(){
     }ofPopMatrix();
 }
 
-void ofApp::urlResponse(ofHttpResponse & response){
-    string name = response.request.name;
-    
-    if(response.status==200){
-        ofxJSONElement json;
-        ofBuffer buf = response.data;
-        string raw = ofToString(buf);
-        json.parse(raw);
-        
-        if(name == "session data"){
-            BrushData::createData(json, data);
-            makeVisual();
-        }
-    }
-}
-
 void ofApp::onResume(){
     ofLogNotice("onResume") << "yay";
 }
 
 void ofApp::exit() {
-    ofUnregisterURLNotification(this);
 }

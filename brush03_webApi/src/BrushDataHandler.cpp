@@ -3,12 +3,22 @@
 #include "ofxAndroidUtils.h"
 #include "ofApp.h"
 
+#include <jni.h>
+extern "C" {
+JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirectFromWebAuth
+        (JNIEnv *env, jobject obj, jstring token) {
+
+    jboolean isCopy = false;
+    const char *c = env->GetStringUTFChars(token, &isCopy);
+    string ut = ofApp::get().userToken = string(c);
+    ofLogNotice("redirectFromWebAuth : ") << ut;
+    ofApp::get().handler.requestSessionData(ut);
+}
+}
+
 void BrushDataHandler::getDataFromServer(){
     ofLogNotice("BrushDataHandler") << "Loading from server";
-
-    //ofxiOSAlerts.addListener(this);
     ofRegisterURLNotification(this);
-    
     requestBearer(appId, appKey);
 }
 
@@ -22,7 +32,6 @@ ofxJSONElement BrushDataHandler::getDataFromDummyFile(string path){
     if (parsingSuccessful){
         ofLogNotice("BrushDataHandler") << "parse JSON file : OK";
         //cout << result.getRawString() << endl;
-        //createData(result);
     }else{
         ofLogError("BrushDataHandler")  << "parse JSON file : ERROR";
     }
@@ -105,12 +114,11 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
         }else if(name == "auth"){
             authUrl = json["url"].asString();
             ofLogNotice("BrushDataHandler") << "got authURL " << authUrl;
-            //ofxAndroidPauseApp();
-            //ofLaunchBrowser(authUrl); // -> destroy
             ofApp::get().webView.showWebView(authUrl);
         }else if(name == "session data"){
-            //createData(json);
             ofLogNotice("session data") << "arrived";
+            BrushData::createData(json, ofApp::get().data);
+            ofApp::get().makeVisual();
         }
     }else{
         ofLogError("url response") << status << " " << response.error << " for request " << name;
@@ -119,6 +127,5 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
 }
 
 BrushDataHandler::~BrushDataHandler(){
-    //ofxiOSAlerts.removeListener(this);
     ofUnregisterURLNotification(this);
 }

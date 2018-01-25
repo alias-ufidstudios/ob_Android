@@ -105,5 +105,4 @@ void Voro::draw(){
             ofDrawCircle(v.x(), v.y(), 2);
         }
     }
-    
 }
