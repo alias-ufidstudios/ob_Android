@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cc.openframeworks.OFAndroid;
 
+import com.facebook.FacebookSdk;
 
 public class OFActivity extends cc.openframeworks.OFActivity{
 
