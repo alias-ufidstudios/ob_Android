@@ -56,7 +56,7 @@ void ofApp::draw(){
 
     ofSetColor(0);
     ofDrawBitmapString(userToken, 50, 50);
-
+    ofDrawBitmapString(ofGetFrameRate(),50, 75);
     float x = ofGetWidth()/2;
     float y = ofGetHeight()/2;
     float rad = ofGetWidth()/2;
