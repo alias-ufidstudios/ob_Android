@@ -1,5 +1,6 @@
 package cc.openframeworks.brush03_webApi;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,10 @@ import android.webkit.WebViewClient;
 import cc.openframeworks.OFAndroid;
 
 import com.facebook.FacebookSdk;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
+import android.graphics.Bitmap;
 
 public class OFActivity extends cc.openframeworks.OFActivity{
 
@@ -148,6 +153,14 @@ public class OFActivity extends cc.openframeworks.OFActivity{
     ///////////////////////////////////////////////////////////////
     // ofxAndroidWebView methods - END
     ///////////////////////////////////////////////////////////////
+
+    public void shareImageFB(byte[] data, int offset, int length){
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, offset, length);
+        SharePhoto photo = new SharePhoto.Builder().setBitmap(bitmap).build();
+        SharePhotoContent content = new SharePhotoContent.Builder().addPhoto(photo).build();
+        ShareDialog.show(this, content);
+    }
 
 }
 

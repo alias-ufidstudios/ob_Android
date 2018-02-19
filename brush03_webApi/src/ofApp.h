@@ -19,6 +19,7 @@ public:
     void draw();
     void exit();
     void makeVisual();
+    void shareFB(ofPixels * pix);
     void onResume();
 
     static ofApp & get(){

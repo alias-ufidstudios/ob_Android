@@ -88,3 +88,19 @@ void ofApp::onResume(){
 
 void ofApp::exit() {
 }
+
+void ofApp::shareFB(ofPixels * pix) {
+
+    jobject activity = ofGetOFActivityObject();
+    jclass activityClass = ofGetJNIEnv()->FindClass("cc/openframeworks/OFActivity");
+    jmethodID shareImageFB = ofGetJNIEnv()->GetMethodID(activityClass,"shareImageFB","()II[B");
+
+    int offset = 0;
+    int length = 100;
+
+    jbyteArray data;
+    // TODO
+    // make jbyteArrat data from screen pixel data
+
+    ofGetJNIEnv()->CallVoidMethod(activity,shareImageFB,(jint)offset, (jint)length, (jbyteArray)data);
+}
