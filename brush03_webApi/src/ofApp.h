@@ -19,8 +19,23 @@ public:
     void draw();
     void exit();
     void makeVisual();
-    void shareFB(ofPixels * pix);
-    void onResume();
+    void shareFB();
+
+    void touchDown(int x, int y, int id);
+    void touchMoved(int x, int y, int id);
+    void touchUp(int x, int y, int id);
+    void touchDoubleTap(int x, int y, int id);
+    void touchCancelled(int x, int y, int id);
+    void swipe(ofxAndroidSwipeDir swipeDir, int id);
+
+    void pause();
+    void stop();
+    void resume();
+    void reloadTextures();
+
+    bool backPressed();
+    void okPressed();
+    void cancelPressed();
 
     static ofApp & get(){
         static ofApp app;
@@ -39,6 +54,9 @@ public:
     string userToken = "aaa";
 
     ofxAndroidWebView webView;
+
+    bool bTakePhoto = false;
+
 };
 
 

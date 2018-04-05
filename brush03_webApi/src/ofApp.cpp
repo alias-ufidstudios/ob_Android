@@ -1,4 +1,4 @@
-//#define USE_DUMMY_DATA
+#define USE_DUMMY_DATA
 
 #include "ofApp.h"
 
@@ -17,6 +17,14 @@ void ofApp::setup() {
         handler.getDataFromServer();
     }
 #endif
+
+    JNIEnv * env = ofGetJNIEnv();
+    jobject activity = ofGetOFActivityObject();
+    jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
+
+    // init
+    jmethodID initBufferMethod = env->GetMethodID(activityClass,"initBuffer","(III)V");
+    env->CallVoidMethod(activity,initBufferMethod, ofGetWidth(), ofGetHeight(), 4);
 }
 
 void ofApp::makeVisual(){
@@ -52,11 +60,9 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
+    ofEnableAntiAliasing();
     ofBackground(255);
 
-    ofSetColor(0);
-    ofDrawBitmapString(userToken, 50, 50);
-    ofDrawBitmapString(ofGetFrameRate(),50, 75);
     float x = ofGetWidth()/2;
     float y = ofGetHeight()/2;
     float rad = ofGetWidth()/2;
@@ -80,27 +86,129 @@ void ofApp::draw(){
         ofDrawCircle(0, 0, rad*0.4);
 
     }ofPopMatrix();
-}
 
-void ofApp::onResume(){
-    ofLogNotice("onResume") << "yay";
+    if(bTakePhoto){
+        bTakePhoto = false;
+
+        bool bSaveToStorage = false;
+        if(bSaveToStorage) {
+            string fileName = "/sdcard/DCIM/BrushCore/ob"
+                              + ofToString(ofGetYear()) + ofToString(ofGetMonth())
+                              + ofToString(ofGetDay()) + ofToString(ofGetHours())
+                              + ofToString(ofGetMinutes()) + ofToString(ofGetSeconds())
+                              + ".png";
+            ofSaveScreen(fileName);
+        }else{
+            JNIEnv * env = ofGetJNIEnv();
+            jobject activity = ofGetOFActivityObject();
+            jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
+            jmethodID method = env->GetMethodID(activityClass,"startShare","()V");
+            env->CallVoidMethod(activity, method);
+        }
+    }
+
+    ofSetColor(0);
+    ofDrawBitmapString(userToken, 50, 50);
+    ofDrawBitmapString(ofGetFrameRate(),50, 75);
+
 }
 
 void ofApp::exit() {
 }
 
-void ofApp::shareFB(ofPixels * pix) {
+void ofApp::shareFB() {
+
+}
+
+void ofApp::touchDown(int x, int y, int id){
+    bTakePhoto = true;
+}
+
+void ofApp::touchMoved(int x, int y, int id){
+}
+
+void ofApp::touchUp(int x, int y, int id){
+}
+
+void ofApp::touchDoubleTap(int x, int y, int id){
+}
+
+void ofApp::touchCancelled(int x, int y, int id){
+}
+
+void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
+}
+
+void ofApp::pause(){
+}
+
+void ofApp::stop(){
+}
+
+void ofApp::resume(){
+}
+
+void ofApp::reloadTextures(){
+
+}
+
+bool ofApp::backPressed(){
+    return false;
+}
+
+void ofApp::okPressed(){
+
+}
+
+void ofApp::cancelPressed(){
+
+}
+
+extern "C" {
+void
+Java_cc_openframeworks_brush03_1webApi_OFActivity_fillBuffer(JNIEnv *env, jobject thiz, jbyteArray buffer) {
 
     jobject activity = ofGetOFActivityObject();
-    jclass activityClass = ofGetJNIEnv()->FindClass("cc/openframeworks/OFActivity");
-    jmethodID shareImageFB = ofGetJNIEnv()->GetMethodID(activityClass,"shareImageFB","()II[B");
+    jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
 
-    int offset = 0;
-    int length = 100;
+    ofApp &app = ofApp::get();
 
-    jbyteArray data;
-    // TODO
-    // make jbyteArrat data from screen pixel data
+    // screenshot on C++
+    ofPixels pix;
+    //pix.allocate(ofGetScreenWidth(), ofGetScreenHeight(), 3);
 
-    ofGetJNIEnv()->CallVoidMethod(activity,shareImageFB,(jint)offset, (jint)length, (jbyteArray)data);
+    ofBaseRenderer * ren = ofGetCurrentRenderer().get();
+    ofBaseGLRenderer * pren = static_cast<ofBaseGLRenderer*>(ren);
+    pren->saveScreen(0,0,ofGetWindowWidth(),ofGetWindowHeight(), pix);
+
+    // Get and Fill java buffer
+    jboolean isCopy;
+    unsigned char * frame =  (unsigned char*)env->GetByteArrayElements(buffer, &isCopy);
+    {
+        ofLogNotice() << "Is copy " << (isCopy ? "TRUE" : "FALSE");
+
+        int ch = pix.getNumChannels();
+        int w = ofGetWidth();
+        int h = ofGetHeight();
+        unsigned char *pixData = pix.getData();
+
+        for(int i=0; i<h; i++) {
+            for(int j=0; j<w; j++) {
+
+                int id = (j+i*w) * ch;
+
+                // write ARGB
+                frame[id+0] = (jbyte)pixData[id+3]-125;
+                frame[id+1] = (jbyte)pixData[id+0]-125;
+                frame[id+2] = (jbyte)pixData[id+1]-125;
+                frame[id+3] = (jbyte)pixData[id+2]-125;
+            }
+        }
+
+    } env->ReleaseByteArrayElements(buffer, (jbyte*)frame, 0);
+
+    jmethodID shareImageFB = env->GetMethodID(activityClass,"shareImageFacebook","()V");
+    env->CallVoidMethod(activity,shareImageFB);
+}
+
 }
