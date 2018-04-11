@@ -17,9 +17,9 @@ public:
     void setup();
     void update();
     void draw();
-    void exit();
     void makeVisual();
-    void shareFB();
+    void openShareIntent();
+    void exit();
 
     void touchDown(int x, int y, int id);
     void touchMoved(int x, int y, int id);
@@ -57,6 +57,7 @@ public:
 
     bool bTakePhoto = false;
 
+    string cacheDir = "unknown";
 };
 
 

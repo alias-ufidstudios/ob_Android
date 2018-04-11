@@ -147,85 +147,21 @@ public class OFActivity extends cc.openframeworks.OFActivity{
         return true;
     }
 
-    public void initBuffer(int w, int h, int ch){
-
-        imgWidth = w;
-        imgHeight = h;
-        imgCh = ch;
-        int bufferSize = w * h * ch;
-        buffer = new byte[bufferSize];
-        for(int i=0; i<h; i++) {
-            for(int j=0; j<w; j++) {
-                int id = j+i*w;
-                buffer[id*4 + 0] = (byte)255;  // A
-                buffer[id*4 + 1] = (byte)123;  // R
-                buffer[id*4 + 2] = (byte)56;   // G
-                buffer[id*4 + 3] = (byte)78;   // B
-            }
-        }
+    public String getExternalCacheDirJava(){
+        return this.getExternalCacheDir().toString();
     }
 
-    public void startShare(){
-        fillBuffer(buffer);
+    public void openShareIntent(String path){
+        String p = "file://" + path;
+        Uri uri = Uri.parse(p);
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/*");
+        startActivity(Intent.createChooser(shareIntent, "Share Image"));
     }
-
-    private Bitmap createTestBitmap(int w, int h){
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                if (i % 2 == 0) bitmap.setPixel(j, i, 0xFFFF0000);
-                else bitmap.setPixel(j, i, 0xFF0000FF);
-            }
-        }
-        return bitmap;
-    }
-
-    private Bitmap createBitmapFromBuffer(int w, int h, byte[] buffer){
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                int id = (j+i*w) * 4;
-                int a = (buffer[id+0]+125) & 0xFF;
-                int r = (buffer[id+1]+125) & 0xFF;
-                int g = (buffer[id+2]+125) & 0xFF;
-                int b = (buffer[id+3]+125) & 0xFF;
-                int color = Color.argb(a,r,g,b);
-                bitmap.setPixel(j, i, color);
-            }
-        }
-        return bitmap;
-    }
-
-    public void shareImageFacebook(){
-
-        boolean hasFacebookApp = isAppInstalled("com.facebook.katana");
-        if(hasFacebookApp){
-
-            Bitmap bitmap = createBitmapFromBuffer(imgWidth, imgHeight/3, buffer);
-
-            SharePhoto photo = new SharePhoto.Builder().setBitmap(bitmap).setCaption("Test Photo from Android yay").build();
-            SharePhotoContent content = new SharePhotoContent.Builder().addPhoto(photo).build();
-            ShareDialog.show(this, content);
-        }else{
-            // TODO
-            // uninstall fb app and test on device
-            Log.w("shareImageFacebook()", "Can not find facebook app");
-
-            // show dialog
-            String message = "Please install Facebook Official App to share your image(or you can save an image)";
-            OFAndroid.alertBox(message);
-        }
-    }
-
-    private byte[] buffer = null;
-    private int imgWidth = -123;
-    private int imgHeight = -123;
-    private int imgCh = -123;
 
     public static native void redirectFromWebAuth(String userToken);
-    public static native void fillBuffer(byte[] data);
 
 }
 

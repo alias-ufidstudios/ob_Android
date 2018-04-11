@@ -21,10 +21,11 @@ void ofApp::setup() {
     JNIEnv * env = ofGetJNIEnv();
     jobject activity = ofGetOFActivityObject();
     jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
-
-    // init
-    jmethodID initBufferMethod = env->GetMethodID(activityClass,"initBuffer","(III)V");
-    env->CallVoidMethod(activity,initBufferMethod, ofGetWidth(), ofGetHeight(), 4);
+    jmethodID method = env->GetMethodID(activityClass,"getExternalCacheDirJava","()Ljava/lang/String;");
+    jstring js = (jstring)env->CallObjectMethod(activity, method);
+    const char * c = env->GetStringUTFChars(js,0);
+    cacheDir = string(c);
+    ofLogNotice() << "External File directory is -> " << cacheDir;
 }
 
 void ofApp::makeVisual(){
@@ -89,22 +90,7 @@ void ofApp::draw(){
 
     if(bTakePhoto){
         bTakePhoto = false;
-
-        bool bSaveToStorage = false;
-        if(bSaveToStorage) {
-            string fileName = "/sdcard/DCIM/BrushCore/ob"
-                              + ofToString(ofGetYear()) + ofToString(ofGetMonth())
-                              + ofToString(ofGetDay()) + ofToString(ofGetHours())
-                              + ofToString(ofGetMinutes()) + ofToString(ofGetSeconds())
-                              + ".png";
-            ofSaveScreen(fileName);
-        }else{
-            JNIEnv * env = ofGetJNIEnv();
-            jobject activity = ofGetOFActivityObject();
-            jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
-            jmethodID method = env->GetMethodID(activityClass,"startShare","()V");
-            env->CallVoidMethod(activity, method);
-        }
+        openShareIntent();
     }
 
     ofSetColor(0);
@@ -113,10 +99,19 @@ void ofApp::draw(){
 
 }
 
-void ofApp::exit() {
-}
+void ofApp::openShareIntent() {
 
-void ofApp::shareFB() {
+    // save
+    string fileName = cacheDir + "/BrushCore.png";
+    ofSaveScreen(fileName);
+
+    // call java
+    JNIEnv * env = ofGetJNIEnv();
+    jobject activity = ofGetOFActivityObject();
+    jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
+    jmethodID method = env->GetMethodID(activityClass,"openShareIntent","(Ljava/lang/String;)V");
+    jstring fileNamej = env->NewStringUTF(fileName.c_str());
+    env->CallVoidMethod(activity, method, fileNamej);
 
 }
 
@@ -164,51 +159,8 @@ void ofApp::cancelPressed(){
 
 }
 
-extern "C" {
-void
-Java_cc_openframeworks_brush03_1webApi_OFActivity_fillBuffer(JNIEnv *env, jobject thiz, jbyteArray buffer) {
-
-    jobject activity = ofGetOFActivityObject();
-    jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
-
-    ofApp &app = ofApp::get();
-
-    // screenshot on C++
-    ofPixels pix;
-    //pix.allocate(ofGetScreenWidth(), ofGetScreenHeight(), 3);
-
-    ofBaseRenderer * ren = ofGetCurrentRenderer().get();
-    ofBaseGLRenderer * pren = static_cast<ofBaseGLRenderer*>(ren);
-    pren->saveScreen(0,0,ofGetWindowWidth(),ofGetWindowHeight(), pix);
-
-    // Get and Fill java buffer
-    jboolean isCopy;
-    unsigned char * frame =  (unsigned char*)env->GetByteArrayElements(buffer, &isCopy);
-    {
-        ofLogNotice() << "Is copy " << (isCopy ? "TRUE" : "FALSE");
-
-        int ch = pix.getNumChannels();
-        int w = ofGetWidth();
-        int h = ofGetHeight();
-        unsigned char *pixData = pix.getData();
-
-        for(int i=0; i<h; i++) {
-            for(int j=0; j<w; j++) {
-
-                int id = (j+i*w) * ch;
-
-                // write ARGB
-                frame[id+0] = (jbyte)pixData[id+3]-125;
-                frame[id+1] = (jbyte)pixData[id+0]-125;
-                frame[id+2] = (jbyte)pixData[id+1]-125;
-                frame[id+3] = (jbyte)pixData[id+2]-125;
-            }
-        }
-
-    } env->ReleaseByteArrayElements(buffer, (jbyte*)frame, 0);
-
-    jmethodID shareImageFB = env->GetMethodID(activityClass,"shareImageFacebook","()V");
-    env->CallVoidMethod(activity,shareImageFB);
-}
-
+void ofApp::exit(){
+//    onDestroy does not work
+//    string fileName = cacheDir + "/tmp.png";
+//    ofFile::removeFile(fileName, false);
 }
