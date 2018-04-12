@@ -18,18 +18,14 @@ import android.webkit.WebViewClient;
 import cc.openframeworks.OFAndroid;
 import cc.openframeworks.OFAndroidLifeCycle;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.ShareDialog;
+//import com.facebook.CallbackManager;
+//import com.facebook.FacebookSdk;
+//import com.facebook.share.model.SharePhoto;
+//import com.facebook.share.model.SharePhotoContent;
+//import com.facebook.share.widget.ShareDialog;
 import android.graphics.Bitmap;
 
-import java.nio.IntBuffer;
-
 public class OFActivity extends cc.openframeworks.OFActivity{
-
-    private CallbackManager callbackManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

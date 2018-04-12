@@ -18,12 +18,12 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <!--<meta-data-->
+            <!--android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>-->
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider151038051987150"
-            android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" />
+        <!--<provider android:authorities="com.facebook.app.FacebookContentProvider151038051987150"-->
+            <!--android:name="com.facebook.FacebookContentProvider"-->
+            <!--android:exported="true" />-->
 
         <activity
             android:name="cc.openframeworks.brush03_webApi.OFActivity"

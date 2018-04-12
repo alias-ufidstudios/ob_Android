@@ -112,7 +112,6 @@ void ofApp::openShareIntent() {
     jmethodID method = env->GetMethodID(activityClass,"openShareIntent","(Ljava/lang/String;)V");
     jstring fileNamej = env->NewStringUTF(fileName.c_str());
     env->CallVoidMethod(activity, method, fileNamej);
-
 }
 
 void ofApp::touchDown(int x, int y, int id){
