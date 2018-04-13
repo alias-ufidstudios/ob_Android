@@ -12,9 +12,15 @@
         -->
     </style>
 
-    <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!--<item name="colorPrimary">#FFFFFF</item>-->
+        <!--<item name="colorPrimaryDark">#303F9F</item>-->
+        <!--<item name="colorAccent">#FF4081</item>-->
+    </style>
+
+
+    <style name="SplashTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
 </resources>
