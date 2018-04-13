@@ -36,7 +36,7 @@ void ofApp::getData(){
 void ofApp::update(){
 
     if(!bDataok){
-        bNetok = ofxAndroidIsWifiOnline();// || ofxAndroidIsMobileOnline();
+        bNetok = ofxAndroidIsOnline();
         if(bNetok && !bAccessingToCloud){
             getData();
             bAccessingToCloud = true;

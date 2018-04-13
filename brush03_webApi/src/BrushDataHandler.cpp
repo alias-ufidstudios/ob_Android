@@ -11,7 +11,7 @@ JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_redirec
     jboolean isCopy = false;
     const char *c = env->GetStringUTFChars(token, &isCopy);
     string ut = ofApp::get().userToken = string(c);
-    ofLogNotice("redirectFromWebAuth : ") << ut;
+    ofLogNotice("BrushDataHandler") << "redirectFromWebAuth : " << ut;
     ofApp::get().handler.requestSessionData(ut);
 }
 }
@@ -35,8 +35,8 @@ ofxJSONElement BrushDataHandler::getDataFromDummyFile(string path){
     }else{
         ofLogError("BrushDataHandler")  << "parse JSON file : ERROR";
     }
-    
-    ofLogNotice("dummy data") << json.getRawString();
+
+    ofLogNotice("BrushDataHandler") << "dummy data " << json.getRawString();
     return json;
 }
 
@@ -63,10 +63,10 @@ void BrushDataHandler::requestSessionData(string url){
     // request session data
     // example https://api.developer.oralb.com/v1/sessions?from=2015-02-20T12:40:45.327-07:00&to=
 
-    ofLogNotice("requestSessionData") << url;
+    ofLogNotice("BrushDataHandler") << "requestSessionData url=" << url;
     // TODO better string operation
     userToken = url.erase(0, 43); // remove http://dominofactory.net/obTest?userToken=
-    ofLogNotice("userToken") << userToken;
+    ofLogNotice("BrushDataHandler") << "userToken = " << userToken;
     
     ofHttpRequest req;
     req.url = baseurl + "/sessions?from=2015-02-20T12:40:45.327-07:00";
@@ -116,14 +116,19 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
             ofLogNotice("BrushDataHandler") << "got authURL " << authUrl;
             ofApp::get().webView.showWebView(authUrl);
         }else if(name == "session data"){
-            ofLogNotice("session data") << "arrived";
+            ofLogNotice("BrushDataHandler") << "session data received";
             BrushData::createData(json, ofApp::get().data);
-            ofApp::get().makeVisual();
+
+            if(ofApp::get().data.size()!=0) {
+                ofApp::get().makeVisual();
+            }else{
+                ofLogNotice("BrushDataHandler") << "Couldnt get data or data size is 0";
+            }
             ofApp::get().bDataok = true;
             ofApp::get().bAccessingToCloud = false;
         }
     }else{
-        ofLogError("url response") << status << " " << response.error << " for request " << name;
+        ofLogError("BrushDataHandler") << "Error url response" << status << " " << response.error << " for request " << name;
         if(status!=-1){}
     }
 }

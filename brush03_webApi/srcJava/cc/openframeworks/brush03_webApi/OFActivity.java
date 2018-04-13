@@ -104,7 +104,9 @@ public class OFActivity extends cc.openframeworks.OFActivity{
                 wb.getSettings().setLoadWithOverviewMode(true);
                 wb.getSettings().setUseWideViewPort(true);
                 wb.getSettings().setBuiltInZoomControls(false);
-                wb.getSettings().setPluginState(WebSettings.PluginState.ON);
+//                wb.getSettings().setPluginState(WebSettings.PluginState.ON);
+//                wb.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+//                wb.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                 wb.setWebViewClient(new HelloWebViewClient());
                 wb.loadUrl(url);
                 wb.setVisibility(View.VISIBLE);
