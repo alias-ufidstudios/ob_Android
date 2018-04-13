@@ -11,15 +11,19 @@
 class ofApp : public ofxAndroidApp{
     
 public:
-     ofApp(){ cout << "construct ofApp" << endl; }
-    //~ofApp(){ cout << "destruct  ofApp" << endl; }
+    static ofApp & get();
+    ofApp(){}
 
     void setup();
     void update();
     void draw();
     void makeVisual();
+
+    //
+    // ofApp_helper.cpp
+    //
+    string getExternalCacheDir();
     void openShareIntent();
-    void exit();
 
     void touchDown(int x, int y, int id);
     void touchMoved(int x, int y, int id);
@@ -27,36 +31,25 @@ public:
     void touchDoubleTap(int x, int y, int id);
     void touchCancelled(int x, int y, int id);
     void swipe(ofxAndroidSwipeDir swipeDir, int id);
-
     void pause();
     void stop();
     void resume();
     void reloadTextures();
-
     bool backPressed();
     void okPressed();
     void cancelPressed();
+    void exit();
 
-    static ofApp & get(){
-        static ofApp app;
-        return app;
-    }
-      
+
+    ofxAndroidWebView webView;
     vector<BrushData> data;
     BrushDataHandler handler;
-
     CircularVisualizer viz;
     Voro voro;
     Np np;
     
-    int num = 0;
-
-    string userToken = "aaa";
-
-    ofxAndroidWebView webView;
-
     bool bTakePhoto = false;
-
+    string userToken = "aaa";
     string cacheDir = "unknown";
 };
 
