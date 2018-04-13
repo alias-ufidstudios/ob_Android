@@ -18,6 +18,7 @@ public:
     void update();
     void draw();
     void makeVisual();
+    void getData();
 
     //
     // ofApp_helper.cpp
@@ -47,7 +48,10 @@ public:
     CircularVisualizer viz;
     Voro voro;
     Np np;
-    
+
+    bool bNetok = false;
+    bool bAccessingToCloud = false;
+    bool bDataok = false;
     bool bTakePhoto = false;
     string userToken = "aaa";
     string cacheDir = "unknown";

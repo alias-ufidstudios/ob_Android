@@ -119,6 +119,8 @@ void BrushDataHandler::urlResponse(ofHttpResponse & response){
             ofLogNotice("session data") << "arrived";
             BrushData::createData(json, ofApp::get().data);
             ofApp::get().makeVisual();
+            ofApp::get().bDataok = true;
+            ofApp::get().bAccessingToCloud = false;
         }
     }else{
         ofLogError("url response") << status << " " << response.error << " for request " << name;

@@ -25,6 +25,33 @@ void ofApp::openShareIntent() {
     env->CallVoidMethod(activity, method, fileNamej);
 }
 
+void ofApp::makeVisual(){
+
+    viz.composePlotData(data);
+
+    float minRad, maxRad;
+    minRad = 0;
+    maxRad = TWO_PI;
+    voro.addVertices(data, ob::plot::TYPE::HOUR, minRad, maxRad);
+    voro.addVertices(data, ob::plot::TYPE::DAY,  minRad, maxRad);
+    voro.addVertices(data, ob::plot::TYPE::WEEK, minRad, maxRad);
+    voro.addVertices(data, ob::plot::TYPE::MONTH,minRad, maxRad);
+    voro.addVertices(data, ob::plot::TYPE::YEAR, minRad, maxRad);
+
+    voro.vPs.push_back(vPoint(0,0)); // put a vertex at center
+    voro.create();
+
+    minRad = 0;
+    maxRad = TWO_PI;
+    np.addVertices(data, ob::plot::TYPE::HOUR,  minRad, maxRad);
+    np.addVertices(data, ob::plot::TYPE::DAY,   minRad, maxRad);
+    np.addVertices(data, ob::plot::TYPE::WEEK,  minRad, maxRad);
+    np.addVertices(data, ob::plot::TYPE::MONTH, minRad, maxRad);
+    np.addVertices(data, ob::plot::TYPE::YEAR,  minRad, maxRad);
+    np.create(2);
+
+}
+
 void ofApp::touchDown(int x, int y, int id){
     bTakePhoto = true;
 }
