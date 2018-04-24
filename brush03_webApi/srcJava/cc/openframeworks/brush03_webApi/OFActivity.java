@@ -1,13 +1,10 @@
 package cc.openframeworks.brush03_webApi;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
-import android.opengl.GLES20;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,26 +12,27 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import cc.openframeworks.OFAndroid;
-import cc.openframeworks.OFAndroidLifeCycle;
+import android.widget.Button;
 
-//import com.facebook.CallbackManager;
-//import com.facebook.FacebookSdk;
-//import com.facebook.share.model.SharePhoto;
-//import com.facebook.share.model.SharePhotoContent;
-//import com.facebook.share.widget.ShareDialog;
-import android.graphics.Bitmap;
+import cc.openframeworks.OFAndroid;
 
 public class OFActivity extends cc.openframeworks.OFActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public void onDetachedFromWindow() {
+        // UI
+        Button btn = (Button)findViewById(R.id.share_btn);
+        btn.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v){
+                Log.v("ShareButtonPressed", "TakePhoto");
+                takePhoto();
+            }
+        });
     }
+    public native static void takePhoto();
 
     // Menus
     // http://developer.android.com/guide/topics/ui/menus.html
@@ -75,7 +73,7 @@ public class OFActivity extends cc.openframeworks.OFActivity{
     // ofxAndroidWebView methods - START
     ///////////////////////////////////////////////////////////////
 
-    WebView wb;
+    private WebView wb;
     private class HelloWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -121,7 +119,6 @@ public class OFActivity extends cc.openframeworks.OFActivity{
                 wb.setVisibility(View.GONE);
             }
         });
-
     }
 
     @Override

@@ -12,11 +12,11 @@ string ofApp::getExternalCacheDir(){
 
 void ofApp::openShareIntent() {
 
-    // save
+    // save screenshot
     string fileName = cacheDir + "/BrushCore.png";
     ofSaveScreen(fileName);
 
-    // call java
+    // call java and open ShareIntent
     JNIEnv * env = ofGetJNIEnv();
     jobject activity = ofGetOFActivityObject();
     jclass activityClass = env->FindClass("cc/openframeworks/brush03_webApi/OFActivity");
@@ -53,7 +53,7 @@ void ofApp::makeVisual(){
 }
 
 void ofApp::touchDown(int x, int y, int id){
-    bTakePhoto = true;
+    //bTakePhoto = true;
 }
 
 void ofApp::touchMoved(int x, int y, int id){
