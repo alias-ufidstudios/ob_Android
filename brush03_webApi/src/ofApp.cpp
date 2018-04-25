@@ -1,6 +1,13 @@
-//#define USE_DUMMY_DATA
+#define USE_DUMMY_DATA
 
 #include "ofApp.h"
+#include <jni.h>
+
+extern "C" {
+JNIEXPORT void JNICALL Java_cc_openframeworks_brush03_1webApi_OFActivity_takePhoto(JNIEnv *env, jobject obj) {
+    ofApp::get().bTakePhoto = true;
+}
+}
 
 ofApp & ofApp::get(){
     static ofApp app;
@@ -15,6 +22,7 @@ void ofApp::setup() {
 
     cacheDir = getExternalCacheDir();
     ofLogNotice() << "External File directory is -> " << cacheDir;
+
 }
 
 void ofApp::getData(){
@@ -36,7 +44,7 @@ void ofApp::getData(){
 void ofApp::update(){
 
     if(!bDataok){
-        bNetok = ofxAndroidIsWifiOnline();// || ofxAndroidIsMobileOnline();
+        bNetok = ofxAndroidIsOnline();
         if(bNetok && !bAccessingToCloud){
             getData();
             bAccessingToCloud = true;
@@ -95,4 +103,3 @@ void ofApp::draw() {
         ofDrawLine(ofGetWidth(), 0, 0, ofGetHeight());
     }
 }
-

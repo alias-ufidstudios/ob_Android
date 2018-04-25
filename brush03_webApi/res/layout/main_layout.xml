@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-   <RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-       	<RelativeLayout android:id="@+id/of_gl_surface_container" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
-    	<!-- add here other views' layouts -->
+   <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+            android:id="@+id/of_gl_surface_container"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </RelativeLayout>
+
+    <Button
+        android:id="@+id/share_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/share_button"
+        android:drawableTop="@mipmap/ic_share_black_24dp"
+        android:padding="13dp"
+        />
+
     <WebView
         android:id="@+id/webView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="gone">
+    </WebView>
 
 </RelativeLayout>
