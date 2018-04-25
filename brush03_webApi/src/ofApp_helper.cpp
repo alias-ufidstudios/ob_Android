@@ -23,7 +23,6 @@ void ofApp::openShareIntent() {
     jmethodID method = env->GetMethodID(activityClass,"openShareIntent","(Ljava/lang/String;)V");
     jstring fileNamej = env->NewStringUTF(fileName.c_str());
     env->CallVoidMethod(activity, method, fileNamej);
-    env->DeleteLocalRef((jobject)fileNamej);
 }
 
 void ofApp::makeVisual(){
